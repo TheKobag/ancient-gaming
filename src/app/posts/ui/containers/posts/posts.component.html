@@ -1,0 +1,21 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <section class="py-10 px-12">
+    <ng-container *ngIf="vm.data.length > 0; else skeletonTemplate">
+      <app-post-list [posts]="vm.data"></app-post-list>
+
+      <app-pagination
+        [actualPage]="vm.meta.page"
+        [lastPage]="vm.meta.lastPage"
+        (onGoToPageClick)="goToPage($event)"
+      ></app-pagination>
+    </ng-container>
+
+    <ng-template #skeletonTemplate>
+      <article class="grid grid-flow-row gap-8 justify-items-center text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 h-full">
+        <app-post-skeleton></app-post-skeleton>
+        <app-post-skeleton></app-post-skeleton>
+        <app-post-skeleton></app-post-skeleton>
+      </article>
+    </ng-template>
+  </section>
+</ng-container>
