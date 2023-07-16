@@ -9,6 +9,8 @@ import { GraphQLModule } from './graphql.module';
 import { EffectsModule } from '@ngrx/effects';
 import { PostsEffect } from './posts/store/posts.effects';
 import { postReducer } from './posts/store/posts.reducer';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +22,10 @@ import { postReducer } from './posts/store/posts.reducer';
     StoreModule.forRoot({}),
     StoreModule.forFeature('posts', postReducer),
     EffectsModule.forRoot({}),
-    EffectsModule.forFeature([PostsEffect])
+    EffectsModule.forFeature([PostsEffect]),
+
+    HeaderComponent,
+    FooterComponent
   ],
   providers: [],
   bootstrap: [AppComponent],
