@@ -1,9 +1,13 @@
 import { PaginatedPosts } from '../../models/paginated-posts.model';
-import { PostData } from '../models/posts-data-response';
+import { Post } from '../../models/post.model';
 
-export function adaptPaginatedPosts(response: any, page: number, limit: number): PaginatedPosts {
+export function adaptPaginatedPosts(
+  response: any,
+  page: number,
+  limit: number
+): PaginatedPosts {
   return {
-    data: response.data.posts.data.map((post: PostData) => ({
+    data: response.data.posts.data.map((post: Post) => ({
       id: post.id,
       title: post.title,
       body: post.body,

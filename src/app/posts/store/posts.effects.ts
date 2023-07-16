@@ -19,16 +19,15 @@ export class PostsEffect {
       ofType(getPaginatedPosts),
       withLatestFrom(this.store.pipe(select(selectPosts))),
       mergeMap(([action, postsfromStore]) => {
-        if (postsfromStore.data.length > 0 && action.page === postsfromStore.meta.page) {
+        if (
+          postsfromStore.data.length > 0 &&
+          action.page === postsfromStore.meta.page
+        ) {
           return EMPTY;
         }
         return this.postsService
           .getPaginatedPosts(action.page)
-          .pipe(
-            map((data) =>
-              postsFetchAPISuccess({ paginatedPosts: data })
-            )
-          );
+          .pipe(map((data) => postsFetchAPISuccess({ paginatedPosts: data })));
       })
     )
   );

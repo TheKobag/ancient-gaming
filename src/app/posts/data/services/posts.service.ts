@@ -36,8 +36,6 @@ export class PostsService {
           },
         },
       })
-      .pipe(
-        map((response) => adaptPaginatedPosts(response, page, limit))
-      );
+      .pipe(map((response) => adaptPaginatedPosts(response, page, limit)));
   }
 }

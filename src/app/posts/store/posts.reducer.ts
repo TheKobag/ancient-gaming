@@ -7,7 +7,7 @@ export const initialState: PaginatedPosts = {
   meta: {
     totalCount: 0,
     page: 1,
-    lastPage: 1
+    lastPage: 1,
   },
 };
 

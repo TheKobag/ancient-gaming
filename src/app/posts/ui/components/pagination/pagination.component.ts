@@ -4,7 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  Output,
 } from '@angular/core';
 import { Observable, of, switchMap } from 'rxjs';
 import { PaginationItemComponent } from './pagination-item/pagination-item.component';
@@ -18,7 +18,6 @@ import { PaginationItemComponent } from './pagination-item/pagination-item.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
-
   @Input() actualPage: number = 1;
   @Input() lastPage: number = 10;
   @Output() onGoToPageClick = new EventEmitter<number>();
@@ -30,20 +29,14 @@ export class PaginationComponent {
   );
 
   onGoToPage(page: number) {
-    this.pages$ = this.getPages(page)
+    this.pages$ = this.getPages(page);
     this.onGoToPageClick.emit(page);
   }
 
   private getPages(actualPage: number): Observable<Array<number>> {
     let pages = [1, 2, 3, 4, this.lastPage];
     if (actualPage >= 4 && actualPage < this.lastPage - 3) {
-      pages = [
-        1,
-        actualPage - 1,
-        actualPage,
-        actualPage + 1,
-        this.lastPage,
-      ];
+      pages = [1, actualPage - 1, actualPage, actualPage + 1, this.lastPage];
     } else if (actualPage >= this.lastPage - 3) {
       pages = [
         1,
@@ -53,7 +46,7 @@ export class PaginationComponent {
         this.lastPage,
       ];
     }
-    
+
     return of(pages);
   }
 }
