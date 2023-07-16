@@ -1,4 +1,4 @@
 import { createFeatureSelector } from '@ngrx/store';
-import { Post } from '../models/post.model';
+import { PaginatedPosts } from '../models/paginated-posts.model';
  
-export const selectPosts = createFeatureSelector<Post[]>('posts');
+export const selectPosts = createFeatureSelector<PaginatedPosts>('posts');

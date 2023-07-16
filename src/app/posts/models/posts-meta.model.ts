@@ -1,6 +1,6 @@
 export interface PostsMeta {
     totalCount: number;
-    // page: number;
-    // maxPages: number;
+    page: number;
+    lastPage: number;
   }
   
