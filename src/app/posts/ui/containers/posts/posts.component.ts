@@ -12,6 +12,7 @@ import { PostListComponent } from '../../components/post-list/post-list.componen
 import { Observable, map } from 'rxjs';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { PostSkeletonComponent } from '../../components/post-skeleton/post-skeleton.component';
+import { SearchInputComponent } from 'src/app/search-input/search-input.component';
 
 @Component({
   selector: 'app-posts',
@@ -21,6 +22,7 @@ import { PostSkeletonComponent } from '../../components/post-skeleton/post-skele
     PostListComponent,
     PaginationComponent,
     PostSkeletonComponent,
+    SearchInputComponent,
   ],
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
@@ -35,7 +37,11 @@ export class PostsComponent implements OnInit {
     this.store.dispatch(getPaginatedPosts({ page: 1 }));
   }
 
-  goToPage(page: number) {
+  goToPage(page: number): void {
     this.store.dispatch(getPaginatedPosts({ page: page }));
+  }
+
+  onSearchSubmitted(search: string): void {
+    this.store.dispatch(getPaginatedPosts({ page: 1, search: search }));
   }
 }

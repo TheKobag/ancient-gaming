@@ -8,7 +8,7 @@ export enum PostsActionType {
 
 export const getPaginatedPosts = createAction(
   PostsActionType.GET_PAGINATED_POSTS,
-  props<{ page: number }>()
+  props<{ page: number, search?: string }>()
 );
 
 export const postsFetchAPISuccess = createAction(
