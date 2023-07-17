@@ -6,7 +6,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './pagination-item.component.html',
-  styleUrls: ['./pagination-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationItemComponent {

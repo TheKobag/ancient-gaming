@@ -7,17 +7,15 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-
-  toggleDropdown(): void{
+  toggleDropdown(): void {
     const dropdownElement = document.getElementById('dropdownNavbar');
     if (dropdownElement?.classList.contains('hidden')) {
-      document.getElementById('dropdownNavbar')?.classList.remove('hidden')
+      document.getElementById('dropdownNavbar')?.classList.remove('hidden');
     } else {
-      document.getElementById('dropdownNavbar')?.classList.add('hidden')
+      document.getElementById('dropdownNavbar')?.classList.add('hidden');
     }
   }
 }

@@ -23,15 +23,8 @@ const routes: Routes = [
       {
         path: 'update',
         loadComponent: () =>
-          import('./posts/ui/containers/posts/posts.component').then(
-            (mod) => mod.PostsComponent
-          ),
-      },
-      {
-        path: 'delete',
-        loadComponent: () =>
-          import('./posts/ui/containers/posts/posts.component').then(
-            (mod) => mod.PostsComponent
+          import('./posts/ui/containers/add/add.component').then(
+            (mod) => mod.AddComponent
           ),
       },
     ],

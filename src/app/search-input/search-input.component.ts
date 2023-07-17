@@ -11,10 +11,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './search-input.component.html',
-  styleUrls: ['./search-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchInputComponent {
   @Output() searchSubmitted = new EventEmitter<string>();
-
 }
