@@ -15,4 +15,5 @@ import { PostComponent } from '../post/post.component';
 export class PostListComponent {
   @Input() posts: Array<Post> = [];
   @Output() removePost = new EventEmitter<string>();
+  @Output() updatePost = new EventEmitter<Post>();
 }
