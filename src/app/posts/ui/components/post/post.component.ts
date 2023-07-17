@@ -20,8 +20,13 @@ export class PostComponent {
   @Input() body!: string;
   @Input() id!: string;
   @Output() removePost = new EventEmitter<string>();
+  @Output() updatePost = new EventEmitter<string>();
 
   onRemoveClick(): void {
     this.removePost.next(this.id);
+  }
+
+  onUpdateClick(): void {
+    this.updatePost.next(this.id);
   }
 }

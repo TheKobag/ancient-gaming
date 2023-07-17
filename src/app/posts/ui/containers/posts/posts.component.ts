@@ -6,7 +6,12 @@ import {
   inject,
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { getAllPosts, getPaginatedPosts, removePost } from 'src/app/posts/store/posts.actions';
+import {
+  getAllPosts,
+  getPaginatedPosts,
+  removePost,
+  updatePost,
+} from 'src/app/posts/store/posts.actions';
 import { selectPosts } from 'src/app/posts/store/posts.selector';
 import { PostListComponent } from '../../components/post-list/post-list.component';
 import { Observable, map } from 'rxjs';
@@ -14,6 +19,8 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
 import { PostSkeletonComponent } from '../../components/post-skeleton/post-skeleton.component';
 import { SearchInputComponent } from 'src/app/search-input/search-input.component';
 import { PostStoreService } from 'src/app/posts/store/posts-store.service';
+import { Router } from '@angular/router';
+import { Post } from 'src/app/posts/models/post.model';
 
 @Component({
   selector: 'app-posts',
@@ -31,6 +38,7 @@ import { PostStoreService } from 'src/app/posts/store/posts-store.service';
 })
 export class PostsComponent implements OnInit {
   store = inject(Store);
+  router = inject(Router);
   postStoreService = inject(PostStoreService);
 
   vm$: Observable<any> = this.store.pipe(select(selectPosts));
@@ -41,9 +49,8 @@ export class PostsComponent implements OnInit {
     // this.postStoreService.loadPosts();
 
     this.vm$.subscribe((res) => {
-      console.log("RES", res);
-      
-    })
+      console.log('RES', res);
+    });
   }
 
   goToPage(page: number): void {
@@ -55,7 +62,12 @@ export class PostsComponent implements OnInit {
   }
 
   onRemovePost(id: string): void {
-    this.store.dispatch(removePost({id}));
+    this.store.dispatch(removePost({ id }));
+  }
 
+  onUpdatePost(post: Post): void {
+    this.router.navigate(['posts/add'], {
+      state: { newPost: post },
+    });
   }
 }

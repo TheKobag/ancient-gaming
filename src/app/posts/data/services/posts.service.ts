@@ -109,4 +109,27 @@ export class PostsService {
       })
       .pipe(map((response) => (response.data as any).deletePost));
   }
+
+  updatePost(newPost: Post): Observable<any> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+          mutation ($id: ID!, $input: UpdatePostInput!) {
+            updatePost(id: $id, input: $input) {
+              id
+              body
+              title
+            }
+          }
+        `,
+        variables: {
+          id: newPost.id,
+          input: {
+            body: newPost.body,
+            title: newPost.title,
+          },
+        },
+      })
+      .pipe(map((response) => (response.data as any).deletePost));
+  }
 }

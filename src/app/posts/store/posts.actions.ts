@@ -7,19 +7,18 @@ export enum PostsActionType {
   POSTS_FETCH_API_SUCCESS = '[Posts API] Get Posts Success',
   ADD_POST = '[Posts API] Add Post',
   ADD_POST_API_SUCCESS = '[Posts API] Add Post Success',
-  DELETE_POST_API_SUCCESS = '[Posts API] Delete Post Success',
 
   GET_ALL_POSTS = '[Posts API] Get All Posts',
   REMOVE_POST = '[Posts API] Remove Post',
+  DELETE_POST_API_SUCCESS = '[Posts API] Delete Post Success',
+  UPDATE_POST = '[Posts API] Update Post',
+  UPDATE_POST_API_SUCCESS = '[Posts API] Update Post Success',
 }
 
 export const getPaginatedPosts = createAction(
   PostsActionType.GET_PAGINATED_POSTS,
   props<{ page: number; search?: string }>()
 );
-
-
-
 
 export const getAllPosts = createAction(PostsActionType.GET_ALL_POSTS);
 
@@ -40,8 +39,17 @@ export const saveNewPostAPISucess = createAction(
 export const removePost = createAction(
   PostsActionType.REMOVE_POST,
   props<{ id: string }>()
-  );
-  export const deletePostAPISucess = createAction(
-    PostsActionType.DELETE_POST_API_SUCCESS,
-    props<{ id: string }>()
-  );
+);
+export const deletePostAPISucess = createAction(
+  PostsActionType.DELETE_POST_API_SUCCESS,
+  props<{ id: string }>()
+);
+
+export const updatePost = createAction(
+  PostsActionType.UPDATE_POST,
+  props<{ newPost: Post }>()
+);
+export const updatePostAPISucess = createAction(
+  PostsActionType.UPDATE_POST_API_SUCCESS,
+  props<{ newPost: Post }>()
+);

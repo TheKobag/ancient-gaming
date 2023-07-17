@@ -6,6 +6,7 @@ import {
   getAllPosts,
   postsFetchAPISuccess,
   saveNewPostAPISucess,
+  updatePostAPISucess,
 } from './posts.actions';
 import { Post } from '../models/post.model';
 
@@ -65,19 +66,29 @@ export const postReducer = createReducer(
       body: post.body,
     })) as Post[];
 
-    console.log(posts);
-    
     posts.forEach((post, index) => {
       console.log(post, id);
       if (post.id === id) {
         posts.splice(index, 1);
       }
     });
-    // posts.push({
-    //   id: newPost.id,
-    //   title: newPost.title,
-    //   body: newPost.body,
-    // });
+    return {
+      ...state,
+      posts,
+    };
+  }),
+  on(updatePostAPISucess, (state, { newPost }) => {
+    const posts: Array<Post> = { ...state }.posts.map((post) => ({
+      id: post.id,
+      title: post.title,
+      body: post.body,
+    })) as Post[];
+
+    posts.forEach((post, index) => {
+      if (post.id === newPost.id) {
+        posts[index] = newPost;
+      }
+    });
     return {
       ...state,
       posts,

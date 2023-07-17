@@ -11,6 +11,8 @@ import {
   postsFetchAPISuccess,
   removePost,
   saveNewPostAPISucess,
+  updatePost,
+  updatePostAPISucess,
 } from './posts.actions';
 import { selectPosts } from './posts.selector';
 import { PostStoreService } from './posts-store.service';
@@ -73,6 +75,19 @@ export class PostsEffect {
         this.postsService.removePost(action.id).pipe(
           map((id) => {
             return deletePostAPISucess({ id: action.id });
+          })
+        )
+      )
+    );
+  });
+
+  updatePost$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updatePost),
+      switchMap((action) =>
+        this.postsService.updatePost(action.newPost).pipe(
+          map((id) => {
+            return updatePostAPISucess({ newPost: action.newPost });
           })
         )
       )
