@@ -1,35 +1,31 @@
 import { createReducer, on } from '@ngrx/store';
-import { PaginatedPosts } from '../models/paginated-posts.model';
+import { Post } from '../models/post.model';
 import {
   addPost,
   deletePostAPISucess,
   getAllPosts,
+  paginatedPostsFetchAPISuccess,
   postsFetchAPISuccess,
   saveNewPostAPISucess,
   updatePostAPISucess,
 } from './posts.actions';
-import { Post } from '../models/post.model';
-
-// export const initialState: PaginatedPosts = {
-//   data: [],
-//   meta: {
-//     totalCount: 0,
-//     page: 1,
-//     lastPage: 1,
-//   },
-// };
-
-export interface Posts {
-  list: Post[];
-  // page
-}
 
 export interface PostsState {
   posts: Post[];
+  meta: {
+    totalCount: number;
+    page: number;
+    lastPage: number;
+  };
 }
 
 export const initialState: PostsState = {
   posts: [],
+  meta: {
+    totalCount: 0,
+    page: 1,
+    lastPage: 1,
+  },
 };
 
 export const postReducer = createReducer(
@@ -39,6 +35,18 @@ export const postReducer = createReducer(
     return {
       ...state,
       posts,
+    };
+  }),
+  on(paginatedPostsFetchAPISuccess, (state, { paginatedPosts }) => {
+    return {
+      ...state,
+      posts: paginatedPosts.data,
+      meta: {
+        lastPage: paginatedPosts.meta.lastPage,
+        page: paginatedPosts.meta.page,
+        totalCount: paginatedPosts.meta.totalCount,
+        search: paginatedPosts.meta.search,
+      },
     };
   }),
   on(addPost, (state) => state),
@@ -67,7 +75,6 @@ export const postReducer = createReducer(
     })) as Post[];
 
     posts.forEach((post, index) => {
-      console.log(post, id);
       if (post.id === id) {
         posts.splice(index, 1);
       }

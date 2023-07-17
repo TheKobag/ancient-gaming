@@ -12,7 +12,6 @@ import {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
@@ -21,12 +20,4 @@ export class PostComponent {
   @Input() id!: string;
   @Output() removePost = new EventEmitter<string>();
   @Output() updatePost = new EventEmitter<string>();
-
-  onRemoveClick(): void {
-    this.removePost.next(this.id);
-  }
-
-  onUpdateClick(): void {
-    this.updatePost.next(this.id);
-  }
 }

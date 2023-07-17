@@ -5,22 +5,20 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Post } from 'src/app/posts/models/post.model';
 import {
   getAllPosts,
   getPaginatedPosts,
   removePost,
-  updatePost,
 } from 'src/app/posts/store/posts.actions';
 import { selectPosts } from 'src/app/posts/store/posts.selector';
-import { PostListComponent } from '../../components/post-list/post-list.component';
-import { Observable, map } from 'rxjs';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { PostSkeletonComponent } from '../../components/post-skeleton/post-skeleton.component';
 import { SearchInputComponent } from 'src/app/search-input/search-input.component';
-import { PostStoreService } from 'src/app/posts/store/posts-store.service';
-import { Router } from '@angular/router';
-import { Post } from 'src/app/posts/models/post.model';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { PostListComponent } from '../../components/post-list/post-list.component';
+import { PostSkeletonComponent } from '../../components/post-skeleton/post-skeleton.component';
 
 @Component({
   selector: 'app-posts',
@@ -33,32 +31,27 @@ import { Post } from 'src/app/posts/models/post.model';
     SearchInputComponent,
   ],
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsComponent implements OnInit {
   store = inject(Store);
   router = inject(Router);
-  postStoreService = inject(PostStoreService);
 
   vm$: Observable<any> = this.store.pipe(select(selectPosts));
 
-  ngOnInit(): void {
-    // this.store.dispatch(getPaginatedPosts({ page: 1 }));
-    this.store.dispatch(getAllPosts());
-    // this.postStoreService.loadPosts();
+  search = '';
 
-    this.vm$.subscribe((res) => {
-      console.log('RES', res);
-    });
+  ngOnInit(): void {
+    this.store.dispatch(getAllPosts());
   }
 
   goToPage(page: number): void {
-    // this.store.dispatch(getPaginatedPosts({ page: page }));
+    this.store.dispatch(getPaginatedPosts({ page: page, search: this.search }));
   }
 
   onSearchSubmitted(search: string): void {
-    // this.store.dispatch(getPaginatedPosts({ page: 1, search: search }));
+    this.search = search;
+    this.store.dispatch(getPaginatedPosts({ page: 1, search: search }));
   }
 
   onRemovePost(id: string): void {
@@ -66,7 +59,7 @@ export class PostsComponent implements OnInit {
   }
 
   onUpdatePost(post: Post): void {
-    this.router.navigate(['posts/add'], {
+    this.router.navigate(['posts/update'], {
       state: { newPost: post },
     });
   }

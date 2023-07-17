@@ -1,14 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-post-skeleton',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './post-skeleton.component.html',
-  styleUrls: ['./post-skeleton.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostSkeletonComponent {
-
-}
+export class PostSkeletonComponent {}

@@ -4,11 +4,12 @@ import { Post } from '../models/post.model';
 
 export enum PostsActionType {
   GET_PAGINATED_POSTS = '[Posts API] Get Paginated Posts',
+  PAGINATED_POSTS_FETCH_API_SUCCESS = '[Posts API] Get Paginated Posts Success',
+
+  GET_ALL_POSTS = '[Posts API] Get All Posts',
   POSTS_FETCH_API_SUCCESS = '[Posts API] Get Posts Success',
   ADD_POST = '[Posts API] Add Post',
   ADD_POST_API_SUCCESS = '[Posts API] Add Post Success',
-
-  GET_ALL_POSTS = '[Posts API] Get All Posts',
   REMOVE_POST = '[Posts API] Remove Post',
   DELETE_POST_API_SUCCESS = '[Posts API] Delete Post Success',
   UPDATE_POST = '[Posts API] Update Post',
@@ -18,6 +19,11 @@ export enum PostsActionType {
 export const getPaginatedPosts = createAction(
   PostsActionType.GET_PAGINATED_POSTS,
   props<{ page: number; search?: string }>()
+);
+
+export const paginatedPostsFetchAPISuccess = createAction(
+  PostsActionType.PAGINATED_POSTS_FETCH_API_SUCCESS,
+  props<{ paginatedPosts: PaginatedPosts }>()
 );
 
 export const getAllPosts = createAction(PostsActionType.GET_ALL_POSTS);

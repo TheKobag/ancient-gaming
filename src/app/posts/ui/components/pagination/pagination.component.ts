@@ -14,12 +14,11 @@ import { PaginationItemComponent } from './pagination-item/pagination-item.compo
   standalone: true,
   imports: [CommonModule, PaginationItemComponent],
   templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
   @Input() actualPage: number = 1;
-  @Input() lastPage: number = 10;
+  @Input() lastPage: number = 5;
   @Output() onGoToPageClick = new EventEmitter<number>();
 
   pages$: Observable<Array<number>> = this.getPages(this.actualPage).pipe(
@@ -34,10 +33,10 @@ export class PaginationComponent {
   }
 
   private getPages(actualPage: number): Observable<Array<number>> {
-    let pages = [1, 2, 3, 4, this.lastPage];
+    let pages = [1, 2, 3, 4, this.lastPage > 4 ? this.lastPage : 5];
     if (actualPage >= 4 && actualPage < this.lastPage - 3) {
       pages = [1, actualPage - 1, actualPage, actualPage + 1, this.lastPage];
-    } else if (actualPage >= this.lastPage - 3) {
+    } else if (actualPage < this.lastPage && actualPage >= this.lastPage - 3) {
       pages = [
         1,
         this.lastPage - 3,
