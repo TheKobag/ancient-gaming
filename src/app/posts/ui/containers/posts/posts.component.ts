@@ -6,13 +6,14 @@ import {
   inject,
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { getPaginatedPosts } from 'src/app/posts/store/posts.actions';
+import { getAllPosts, getPaginatedPosts } from 'src/app/posts/store/posts.actions';
 import { selectPosts } from 'src/app/posts/store/posts.selector';
 import { PostListComponent } from '../../components/post-list/post-list.component';
 import { Observable, map } from 'rxjs';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { PostSkeletonComponent } from '../../components/post-skeleton/post-skeleton.component';
 import { SearchInputComponent } from 'src/app/search-input/search-input.component';
+import { PostStoreService } from 'src/app/posts/store/posts-store.service';
 
 @Component({
   selector: 'app-posts',
@@ -30,18 +31,26 @@ import { SearchInputComponent } from 'src/app/search-input/search-input.componen
 })
 export class PostsComponent implements OnInit {
   store = inject(Store);
+  postStoreService = inject(PostStoreService);
 
   vm$: Observable<any> = this.store.pipe(select(selectPosts));
 
   ngOnInit(): void {
-    this.store.dispatch(getPaginatedPosts({ page: 1 }));
+    // this.store.dispatch(getPaginatedPosts({ page: 1 }));
+    this.store.dispatch(getAllPosts());
+    // this.postStoreService.loadPosts();
+
+    this.vm$.subscribe((res) => {
+      console.log("RES", res);
+      
+    })
   }
 
   goToPage(page: number): void {
-    this.store.dispatch(getPaginatedPosts({ page: page }));
+    // this.store.dispatch(getPaginatedPosts({ page: page }));
   }
 
   onSearchSubmitted(search: string): void {
-    this.store.dispatch(getPaginatedPosts({ page: 1, search: search }));
+    // this.store.dispatch(getPaginatedPosts({ page: 1, search: search }));
   }
 }

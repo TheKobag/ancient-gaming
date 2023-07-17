@@ -1,35 +1,66 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, map, mergeMap, withLatestFrom } from 'rxjs';
+import { EMPTY, map, mergeMap, of, switchMap, withLatestFrom } from 'rxjs';
 import { PostsService } from '../data/services/posts.service';
-import { getPaginatedPosts, postsFetchAPISuccess } from './posts.actions';
+import {
+  addPost,
+  getAllPosts,
+  getPaginatedPosts,
+  postsFetchAPISuccess,
+  saveNewPostAPISucess,
+} from './posts.actions';
 import { selectPosts } from './posts.selector';
+import { PostStoreService } from './posts-store.service';
 
 @Injectable()
 export class PostsEffect {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private postStoreService: PostStoreService
   ) {}
 
   loadAllPosts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getPaginatedPosts),
+      ofType(getAllPosts),
       withLatestFrom(this.store.pipe(select(selectPosts))),
       mergeMap(([action, postsfromStore]) => {
-        if (
-          postsfromStore.data.length > 0 &&
-          action.page === postsfromStore.meta.page &&
-          action.search === postsfromStore.meta.search
-        ) {
+        // postsfromStore find page
+        if (postsfromStore.posts.length > 0) {
           return EMPTY;
         }
-        return this.postsService
-          .getPaginatedPosts(action.page, 10, action.search)
-          .pipe(map((data) => postsFetchAPISuccess({ paginatedPosts: data })));
+        // if (
+        //   postsfromStore.data.length > 0 &&
+        //   action.page === postsfromStore.meta.page &&
+        //   action.search === postsfromStore.meta.search
+        // ) {
+        //   return EMPTY;
+        // }
+        // return this.postsService
+        //   .getPaginatedPosts(action.page, 10, action.search)
+        //   .pipe(map((data) => postsFetchAPISuccess({ paginatedPosts: data })));
+        return this.postsService.getAllPosts().pipe(
+          map((posts) => {
+            console.log(posts);
+            return postsFetchAPISuccess({ posts: posts });
+          })
+        );
       })
     )
   );
+
+  saveNewPost$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(addPost),
+      switchMap((action) =>
+        this.postsService.addPost(action.newPost).pipe(
+          map((newPost) => {
+            return saveNewPostAPISucess({ newPost: newPost });
+          })
+        )
+      )
+    );
+  });
 }
