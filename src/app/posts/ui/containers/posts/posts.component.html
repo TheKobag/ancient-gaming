@@ -3,14 +3,14 @@
   <app-search-input (searchSubmitted)="onSearchSubmitted($event)"></app-search-input>
 
   <ng-container *ngIf="vm$ | async as vm">
-    <ng-container *ngIf="vm.data.length > 0; else skeletonTemplate">
-      <app-post-list [posts]="vm.data"></app-post-list>
+    <ng-container *ngIf="vm.posts.length > 0; else skeletonTemplate">
+      <app-post-list [posts]="vm.posts"></app-post-list>
 
-      <app-pagination
-        [actualPage]="vm.meta.page"
-        [lastPage]="vm.meta.lastPage"
+      <!-- <app-pagination
+        [actualPage]="vm.paginatedPosts.meta.page"
+        [lastPage]="vm.paginatedPosts.meta.lastPage"
         (onGoToPageClick)="goToPage($event)"
-      ></app-pagination>
+      ></app-pagination> -->
     </ng-container>
 
     <ng-template #skeletonTemplate>

@@ -21,3 +21,11 @@ export function adaptPaginatedPosts(
     },
   };
 }
+
+export function adaptPosts(response: any): Post[] {
+  return response.data.posts.data.map((post: Post) => ({
+    id: post.id,
+    title: post.title,
+    body: post.body,
+  }));
+}
