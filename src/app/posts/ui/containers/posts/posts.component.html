@@ -4,7 +4,7 @@
 
   <ng-container *ngIf="vm$ | async as vm">
     <ng-container *ngIf="vm.posts.length > 0; else skeletonTemplate">
-      <app-post-list [posts]="vm.posts"></app-post-list>
+      <app-post-list [posts]="vm.posts" (removePost)="onRemovePost($event)"></app-post-list>
 
       <!-- <app-pagination
         [actualPage]="vm.paginatedPosts.meta.page"

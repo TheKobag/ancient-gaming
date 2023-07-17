@@ -94,4 +94,19 @@ export class PostsService {
       })
       .pipe(map((response) => (response.data as any).createPost as Post));
   }
+
+  removePost(id: string): Observable<any> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+          mutation ($id: ID!) {
+            deletePost(id: $id)
+          }
+        `,
+        variables: {
+          id: id,
+        },
+      })
+      .pipe(map((response) => (response.data as any).deletePost));
+  }
 }

@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-post',
@@ -13,4 +19,9 @@ export class PostComponent {
   @Input() title!: string;
   @Input() body!: string;
   @Input() id!: string;
+  @Output() removePost = new EventEmitter<string>();
+
+  onRemoveClick(): void {
+    this.removePost.next(this.id);
+  }
 }
