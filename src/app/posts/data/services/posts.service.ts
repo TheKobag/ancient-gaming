@@ -10,7 +10,11 @@ import { adaptPaginatedPosts } from '../adapters/adapt-post-response';
 export class PostsService {
   apollo = inject(Apollo);
 
-  getPaginatedPosts(page: number, limit = 10): Observable<PaginatedPosts> {
+  getPaginatedPosts(
+    page: number,
+    limit: number = 10,
+    search: string = ''
+  ): Observable<PaginatedPosts> {
     return this.apollo
       .query({
         query: gql`
@@ -33,9 +37,14 @@ export class PostsService {
               page: page,
               limit: limit,
             },
+            search: {
+              q: search,
+            },
           },
         },
       })
-      .pipe(map((response) => adaptPaginatedPosts(response, page, limit)));
+      .pipe(
+        map((response) => adaptPaginatedPosts(response, page, limit, search))
+      );
   }
 }

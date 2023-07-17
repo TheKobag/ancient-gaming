@@ -21,12 +21,13 @@ export class PostsEffect {
       mergeMap(([action, postsfromStore]) => {
         if (
           postsfromStore.data.length > 0 &&
-          action.page === postsfromStore.meta.page
+          action.page === postsfromStore.meta.page &&
+          action.search === postsfromStore.meta.search
         ) {
           return EMPTY;
         }
         return this.postsService
-          .getPaginatedPosts(action.page)
+          .getPaginatedPosts(action.page, 10, action.search)
           .pipe(map((data) => postsFetchAPISuccess({ paginatedPosts: data })));
       })
     )
