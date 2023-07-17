@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Post } from 'src/app/posts/models/post.model';
 import { PostSkeletonComponent } from '../post-skeleton/post-skeleton.component';
 import { PostComponent } from '../post/post.component';
@@ -18,4 +14,5 @@ import { PostComponent } from '../post/post.component';
 })
 export class PostListComponent {
   @Input() posts: Array<Post> = [];
+  @Output() removePost = new EventEmitter<string>();
 }

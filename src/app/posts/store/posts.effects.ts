@@ -5,9 +5,11 @@ import { EMPTY, map, mergeMap, of, switchMap, withLatestFrom } from 'rxjs';
 import { PostsService } from '../data/services/posts.service';
 import {
   addPost,
+  deletePostAPISucess,
   getAllPosts,
   getPaginatedPosts,
   postsFetchAPISuccess,
+  removePost,
   saveNewPostAPISucess,
 } from './posts.actions';
 import { selectPosts } from './posts.selector';
@@ -58,6 +60,19 @@ export class PostsEffect {
         this.postsService.addPost(action.newPost).pipe(
           map((newPost) => {
             return saveNewPostAPISucess({ newPost: newPost });
+          })
+        )
+      )
+    );
+  });
+
+  removePost$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(removePost),
+      switchMap((action) =>
+        this.postsService.removePost(action.id).pipe(
+          map((id) => {
+            return deletePostAPISucess({ id: action.id });
           })
         )
       )

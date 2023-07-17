@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { getAllPosts, getPaginatedPosts } from 'src/app/posts/store/posts.actions';
+import { getAllPosts, getPaginatedPosts, removePost } from 'src/app/posts/store/posts.actions';
 import { selectPosts } from 'src/app/posts/store/posts.selector';
 import { PostListComponent } from '../../components/post-list/post-list.component';
 import { Observable, map } from 'rxjs';
@@ -52,5 +52,10 @@ export class PostsComponent implements OnInit {
 
   onSearchSubmitted(search: string): void {
     // this.store.dispatch(getPaginatedPosts({ page: 1, search: search }));
+  }
+
+  onRemovePost(id: string): void {
+    this.store.dispatch(removePost({id}));
+
   }
 }

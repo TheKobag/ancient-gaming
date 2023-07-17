@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { PaginatedPosts } from '../models/paginated-posts.model';
 import {
   addPost,
+  deletePostAPISucess,
   getAllPosts,
   postsFetchAPISuccess,
   saveNewPostAPISucess,
@@ -46,7 +47,6 @@ export const postReducer = createReducer(
       title: post.title,
       body: post.body,
     })) as Post[];
-    console.log(posts);
 
     posts.push({
       id: newPost.id,
@@ -56,14 +56,31 @@ export const postReducer = createReducer(
     return {
       ...state,
       posts,
-      // posts: {
-      // ...state.posts,
-      // [`${newPost.id}`]: {
-      //   id: newPost.id,
-      //   title: newPost.title,
-      //   body: newPost.body,
-      // },
-      // },
+    };
+  }),
+  on(deletePostAPISucess, (state, { id }) => {
+    const posts: Array<Post> = { ...state }.posts.map((post) => ({
+      id: post.id,
+      title: post.title,
+      body: post.body,
+    })) as Post[];
+
+    console.log(posts);
+    
+    posts.forEach((post, index) => {
+      console.log(post, id);
+      if (post.id === id) {
+        posts.splice(index, 1);
+      }
+    });
+    // posts.push({
+    //   id: newPost.id,
+    //   title: newPost.title,
+    //   body: newPost.body,
+    // });
+    return {
+      ...state,
+      posts,
     };
   })
 );
